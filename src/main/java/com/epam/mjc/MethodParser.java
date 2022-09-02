@@ -22,8 +22,8 @@ public class MethodParser {
      * @param signatureString source string to parse
      * @return {@link MethodSignature} object filled with parsed values from source string
      */
-    public MethodSignature parseFunction(String signatureString) {
-        String[] tokens        = signatureString.split("[(), ]");
+    public static MethodSignature parseFunction(String signatureString) {
+        String[] tokens = signatureString.replaceAll("[,]", "").replaceFirst("[(]", " ").replace(")", "").split(" ");
         String accessModifiers = "protectedprivatepublic";
         MethodSignature output;
         String accessModifier;
@@ -37,14 +37,14 @@ public class MethodParser {
             methodName     = tokens[2];
             if (tokens.length > 3) {
                 arguments = new ArrayList<>();
-                for (int i = 3; i < tokens.length; i += 3) {
-                    if (tokens[i].equals(""))
-                        continue;
-
+                for (int i = 3; i < tokens.length; i += 2) {
                     arguments.add(new MethodSignature.Argument(tokens[i], tokens[i + 1]));
                 }
+                output = new MethodSignature(methodName, arguments);
             }
-            output = new MethodSignature(methodName, arguments);
+            else
+                output = new MethodSignature(methodName);
+
             output.setReturnType(returnType);
             output.setAccessModifier(accessModifier);
         }
@@ -54,29 +54,22 @@ public class MethodParser {
             methodName = tokens[1];
             if (tokens.length > 2) {
                 arguments = new ArrayList<>();
-                for (int i = 2; i < tokens.length; i += 3) {
-                    if (tokens[i].equals(""))
-                        continue;
-
+                for (int i = 2; i < tokens.length; i += 2) {
                     arguments.add(new MethodSignature.Argument(tokens[i], tokens[i + 1]));
                 }
+                output = new MethodSignature(methodName, arguments);
             }
-            output = new MethodSignature(methodName, arguments);
+            else
+                output = new MethodSignature(methodName);
+
             output.setReturnType(returnType);
         }
 
         return output;
     }
 
-    public static void testParse (String signature) {
-        String[] tokens = signature.split("[(), ]");
-
-        System.out.println(tokens.length);
-
-    }
-
-    /* public static void main (String[] args) {
-        MethodSignature hello = parseFunction("public DateTime getCurrentDateTime()");
+    /*public static void main (String[] args) {
+        MethodSignature hello = parseFunction("Vector3 distort(int x, int y, int z, float magnitude)");
         System.out.println("Access Modifier: " + hello.getAccessModifier());
         System.out.println("Return Type: " + hello.getReturnType());
         System.out.println("Method Name: " + hello.getMethodName());
@@ -84,6 +77,7 @@ public class MethodParser {
             for (MethodSignature.Argument argument : hello.getArguments()) {
                 System.out.println("Argument Type: " + argument.getType() + "; Argument Name: " + argument.getName());
             }
-        }
-    }*/
+        }*/
+
+    }
 }
