@@ -43,11 +43,8 @@ public class MethodParser {
 
                     arguments.add(new MethodSignature.Argument(tokens[i], tokens[i + 1]));
                 }
-                output = new MethodSignature(methodName, arguments);
             }
-            else
-                output = new MethodSignature(methodName);
-
+            output = new MethodSignature(methodName, arguments);
             output.setReturnType(returnType);
             output.setAccessModifier(accessModifier);
         }
@@ -63,11 +60,8 @@ public class MethodParser {
 
                     arguments.add(new MethodSignature.Argument(tokens[i], tokens[i + 1]));
                 }
-                output = new MethodSignature(methodName, arguments);
             }
-            else
-                output = new MethodSignature(methodName);
-
+            output = new MethodSignature(methodName, arguments);
             output.setReturnType(returnType);
         }
 
