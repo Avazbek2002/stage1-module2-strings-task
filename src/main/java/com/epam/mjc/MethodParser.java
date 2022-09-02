@@ -35,12 +35,13 @@ public class MethodParser {
             accessModifier = tokens[0];
             returnType     = tokens[1];
             methodName     = tokens[2];
+            if (tokens.length > 3) {
+                for (int i = 3; i < tokens.length; i += 3) {
+                    if (tokens[i].equals(""))
+                        continue;
 
-            for (int i = 3; i < tokens.length; i+=3) {
-                if (tokens[i].equals(""))
-                    continue;
-
-                arguments.add(new MethodSignature.Argument(tokens[i], tokens[i+1]));
+                    arguments.add(new MethodSignature.Argument(tokens[i], tokens[i + 1]));
+                }
             }
             output = new MethodSignature(methodName, arguments);
             output.setReturnType(returnType);
@@ -50,17 +51,29 @@ public class MethodParser {
         else {
             returnType = tokens[0];
             methodName = tokens[1];
+            if (tokens.length > 2) {
+                for (int i = 2; i < tokens.length; i += 3) {
+                    if (tokens[i].equals(" "))
+                        continue;
 
-            for (int i = 2; i < tokens.length; i+=3) {
-                if (tokens[i].equals(" "))
-                    continue;
-
-                arguments.add(new MethodSignature.Argument(tokens[i], tokens[i+1]));
+                    arguments.add(new MethodSignature.Argument(tokens[i], tokens[i + 1]));
+                }
             }
             output = new MethodSignature(methodName, arguments);
             output.setReturnType(returnType);
         }
 
         return output;
+    }
+
+    public static void testParse (String signature) {
+        String[] tokens = signature.split("[(), ]");
+
+        System.out.println(tokens.length);
+
+    }
+
+    public static void main (String[] args) {
+        testParse("accessModifier returnType methodName(argumentType1 argumentName1, argumentType2 argumentName2)");
     }
 }
