@@ -37,7 +37,7 @@ public class MethodParser {
             methodName     = tokens[2];
 
             for (int i = 3; i < tokens.length; i+=3) {
-                if (tokens[i].equals(" "))
+                if (tokens[i].equals(""))
                     continue;
 
                 arguments.add(new MethodSignature.Argument(tokens[i], tokens[i+1]));
