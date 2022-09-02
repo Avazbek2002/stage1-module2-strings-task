@@ -77,7 +77,7 @@ public class MethodParser {
             for (MethodSignature.Argument argument : hello.getArguments()) {
                 System.out.println("Argument Type: " + argument.getType() + "; Argument Name: " + argument.getName());
             }
-        }*/
+        }
 
-    }
+    } */
 }
