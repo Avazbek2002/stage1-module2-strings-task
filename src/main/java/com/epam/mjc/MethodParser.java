@@ -24,18 +24,19 @@ public class MethodParser {
      */
     public MethodSignature parseFunction(String signatureString) {
         String[] tokens        = signatureString.split("[(), ]");
-        String accessModifiers = "ProtectedPrivatePublic";
+        String accessModifiers = "protectedprivatepublic";
         MethodSignature output;
         String accessModifier;
         String returnType;
         String methodName;
-        List <MethodSignature.Argument> arguments = new ArrayList<MethodSignature.Argument>();
+        List <MethodSignature.Argument> arguments = null;
 
         if (accessModifiers.contains(tokens[0])) {
             accessModifier = tokens[0];
             returnType     = tokens[1];
             methodName     = tokens[2];
             if (tokens.length > 3) {
+                arguments = new ArrayList<>();
                 for (int i = 3; i < tokens.length; i += 3) {
                     if (tokens[i].equals(""))
                         continue;
@@ -52,8 +53,9 @@ public class MethodParser {
             returnType = tokens[0];
             methodName = tokens[1];
             if (tokens.length > 2) {
+                arguments = new ArrayList<>();
                 for (int i = 2; i < tokens.length; i += 3) {
-                    if (tokens[i].equals(" "))
+                    if (tokens[i].equals(""))
                         continue;
 
                     arguments.add(new MethodSignature.Argument(tokens[i], tokens[i + 1]));
@@ -73,7 +75,15 @@ public class MethodParser {
 
     }
 
-    public static void main (String[] args) {
-        testParse("accessModifier returnType methodName(argumentType1 argumentName1, argumentType2 argumentName2)");
-    }
+    /* public static void main (String[] args) {
+        MethodSignature hello = parseFunction("public DateTime getCurrentDateTime()");
+        System.out.println("Access Modifier: " + hello.getAccessModifier());
+        System.out.println("Return Type: " + hello.getReturnType());
+        System.out.println("Method Name: " + hello.getMethodName());
+        if (hello.getArguments() != null) {
+            for (MethodSignature.Argument argument : hello.getArguments()) {
+                System.out.println("Argument Type: " + argument.getType() + "; Argument Name: " + argument.getName());
+            }
+        }
+    }*/
 }
