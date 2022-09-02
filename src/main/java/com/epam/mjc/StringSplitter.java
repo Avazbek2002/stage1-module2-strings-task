@@ -2,6 +2,7 @@ package com.epam.mjc;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Arrays;
 
 public class StringSplitter {
 
@@ -13,6 +14,13 @@ public class StringSplitter {
      * @return List of substrings
      */
     public List<String> splitByDelimiters(String source, Collection<String> delimiters) {
-        throw new UnsupportedOperationException("You should implement this method.");
+        String[] delimeter = delimiters.toArray(new String[0]);
+        String regex ="[";
+        for (String del : delimeter) {
+            regex += del;
+        }
+        regex += "]";
+        String[] tokens = source.split(regex);
+        return Arrays.asList(tokens);
     }
 }
